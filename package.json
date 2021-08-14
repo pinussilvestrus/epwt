@@ -1,0 +1,29 @@
+{
+  "name": "epwt",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node lib/test.js",
+    "lint": "eslint .",
+    "test": "run-s lint",
+    "all": "run-s test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pinussilvestrus/epwt.git"
+  },
+  "keywords": [],
+  "author": "Niklas Kiefer <niklas.kiefer@camunda.com (https://github.com/pinussilvestrus)>",
+  "license": "MIT",
+  "dependencies": {
+    "themeparks": "^5.1.49"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-bpmn-io": "^0.12.0",
+    "npm-run-all": "^4.1.5"
+  }
+}
