@@ -1,59 +1,75 @@
 const get = require('./index').get;
 
-
-const entries = get();
-
-// print average waiting time of each coaster
+function general(entries) {
+  console.log('#general');
+  console.log(entries.length, 'timestamp entries fetched.');
+  console.log();
+}
 
 /**
+ * Prints average waiting time of each coaster.
+ * 
  * {
  *   'Blue Fire': [{ value: 30, timestamp: ...}, { ... }],
  *   ...
  * }
  */
-const ridesMap = {};
+function avgWaitingTimePerCoaster(entries) {
+  const ridesMap = {};
 
-entries.forEach(e => {
+  console.log('#avgWaitingTimePerCoaster');
 
-  const {
-    timestamp,
-    data
-  } = e;
+  entries.forEach(e => {
 
-  data.forEach(d => {
     const {
-      name,
-      waitTime,
-      status
-    } = d;
+      timestamp,
+      data
+    } = e;
 
-    if (!ridesMap[name]) {
-      ridesMap[name] = [];
-    }
+    data.forEach(d => {
+      const {
+        name,
+        waitTime,
+        status
+      } = d;
+
+      if (!ridesMap[name]) {
+        ridesMap[name] = [];
+      }
 
 
-    // todo(pinussilvestrus): ignore closed state
-    status !== 'Closed' && ridesMap[name].push({
-      value: waitTime,
-      timestamp
+      // todo(pinussilvestrus): ignore closed state
+      status !== 'Closed' && ridesMap[name].push({
+        value: waitTime,
+        timestamp
+      });
     });
   });
-});
 
-Object.keys(ridesMap).forEach(key => {
-  const rides = ridesMap[key];
+  Object.keys(ridesMap).forEach(key => {
+    const rides = ridesMap[key];
 
-  if (!rides.length) {
-    return console.log('No data for <', key, '>');
-  }
+    if (!rides.length) {
+      return console.log('No data for <', key, '>');
+    }
 
-  let sum = 0;
-  rides.forEach(r => {
-    sum += r.value;
+    let sum = 0;
+    rides.forEach(r => {
+      sum += r.value;
+    });
+
+    console.log(key, ':', sum / rides.length);
   });
 
-  console.log(key, ':', sum / rides.length);
-});
+  console.log();
+}
+
+
+const entries = get();
+
+general(entries);
+avgWaitingTimePerCoaster(entries);
+
 
 
 // helper //////////////
