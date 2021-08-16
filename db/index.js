@@ -19,6 +19,10 @@ function get() {
   return getContents();
 }
 
+function getDBStats() {
+  return fs.statSync(DB_PATH);
+}
+
 function setup() {
   return fs.writeFileSync(DB_PATH, JSON.stringify(EMPTY_OBJECT));
 }
@@ -35,6 +39,7 @@ function getContents() {
 
 module.exports = {
   get,
+  getDBStats,
   post,
   setup
 };
