@@ -40,8 +40,6 @@ function avgWaitingTimePerCoaster(entries) {
         ridesMap[name] = [];
       }
 
-
-      // todo(pinussilvestrus): ignore closed state
       status !== 'Closed' && ridesMap[name].push({
         value: waitTime,
         timestamp
