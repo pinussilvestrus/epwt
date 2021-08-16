@@ -30,7 +30,7 @@ const zbWorker = zbClient.createWorker({
   taskHandler: async (job) => {
     zbWorker.log('Received job for <fetch-waiting-times>.');
 
-    const rideTimes = await getWaitTimes();
+    const rideTimes = await getWaitTimes(true);
 
     job.complete({
       rideTimes

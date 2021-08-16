@@ -4,7 +4,7 @@ const getDBStats = require('./index').getDBStats;
 function general(entries) {
   console.log('#general');
   console.log(entries.length, 'timestamp entries fetched.');
-  console.log('From:', entries[0].timestamp, ', to:', entries[entries.length - 1].timestamp, '.');
+  entries.length && console.log('From:', entries[0].timestamp, ', to:', entries[entries.length - 1].timestamp, '.');
   console.log('Total size:', getDBStats().size, 'Bytes.');
   console.log();
 }
