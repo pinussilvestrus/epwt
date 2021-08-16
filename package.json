@@ -4,11 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node lib/test.js",
     "lint": "eslint .",
     "test": "run-s lint",
     "all": "run-s test",
-    "start:worker1": "node worker/fetchWaitingTimes.js"
+    "start:worker1": "node worker/fetchWaitingTimes.js",
+    "start:worker2": "node worker/saveEntries.js",
+    "start:worker": "run-p start:worker1 start:worker2",
+    "start:lib": "node lib/test.js",
+    "start:db": "node db/test.js"
   },
   "repository": {
     "type": "git",

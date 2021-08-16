@@ -2,7 +2,7 @@ require('dotenv').config({ path: __dirname + '/../.env' });
 
 const { ZBClient } = require('zeebe-node');
 
-const getWaitTimes = require('../lib');
+const post = require('../db').post;
 
 const clientId = process.env.ZEEBE_CLIENT_ID;
 const clientSecret = process.env.ZEEBE_CLIENT_SECRET;
@@ -21,19 +21,21 @@ const zbClient = new ZBClient({
   },
 });
 
-console.log('Start waiting for <fetch-waiting-times> jobs...');
+console.log('Start waiting for <save-entries> jobs...');
 
 const zbWorker = zbClient.createWorker({
-  taskType: 'fetch-waiting-times',
+  taskType: 'save-entries',
   onConnectionError: () => zbWorker.log('Disconnected'),
   onReady: () => zbWorker.log('Connected.'),
   taskHandler: async (job) => {
-    zbWorker.log('Received job for <fetch-waiting-times>.');
+    zbWorker.log('Received job for <save-entries>.');
 
-    const rideTimes = await getWaitTimes();
+    const data = job.variables.rideTimes;
 
-    job.complete({
-      rideTimes
-    });
+    if (data) {
+      post(data);
+    }
+
+    job.complete();
   }
 });

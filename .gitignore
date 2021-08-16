@@ -1,3 +1,4 @@
 node_modules
-themeparks.db
+rides.json
 .env
+themeparks.db

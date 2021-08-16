@@ -1,46 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_17owuy2" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.9.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="1.0.0">
-  <bpmn:process id="FetchWaitingTimes" isExecutable="true">
-    <bpmn:startEvent id="TimerEvent_1" name="Every 15 minutes">
-      <bpmn:outgoing>Flow_0afobbp</bpmn:outgoing>
-      <bpmn:timerEventDefinition id="TimerEventDefinition_1a9pip3">
-        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">R/PT15M</bpmn:timeCycle>
-      </bpmn:timerEventDefinition>
-    </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_0afobbp" sourceRef="TimerEvent_1" targetRef="ServiceTask_1" />
-    <bpmn:endEvent id="EndEvent_1">
-      <bpmn:incoming>Flow_0cl76sk</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0cl76sk" sourceRef="ServiceTask_1" targetRef="EndEvent_1" />
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0rbumvm" targetNamespace="http://bpmn.io/schema/bpmn" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="1.0.0">
+  <bpmn:process id="FetchWaitingTimes" name="fetchWaitingTimes" isExecutable="true">
+    <bpmn:sequenceFlow id="Flow_1pj5m77" sourceRef="TimerEvent_1" targetRef="ServiceTask_1" />
     <bpmn:serviceTask id="ServiceTask_1" name="fetch waiting times">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="fetch-waiting-times" />
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_0afobbp</bpmn:incoming>
-      <bpmn:outgoing>Flow_0cl76sk</bpmn:outgoing>
+      <bpmn:incoming>Flow_1pj5m77</bpmn:incoming>
+      <bpmn:outgoing>Flow_0aih9v1</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0aih9v1" sourceRef="ServiceTask_1" targetRef="ServiceTask_2" />
+    <bpmn:endEvent id="EndEvent_completed" name="completed">
+      <bpmn:incoming>Flow_15z2sad</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:startEvent id="TimerEvent_1" name="Every 15 minutes">
+      <bpmn:outgoing>Flow_1pj5m77</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0f26u08">
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">R/PT15M</bpmn:timeCycle>
+      </bpmn:timerEventDefinition>
+    </bpmn:startEvent>
+    <bpmn:boundaryEvent id="TimerEvent_2" name="after 2 minutes" attachedToRef="ServiceTask_1">
+      <bpmn:outgoing>Flow_09t2knp</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0ajtbwf">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT2M</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:endEvent id="EndEvent_skipped" name="skipped">
+      <bpmn:incoming>Flow_09t2knp</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_09t2knp" sourceRef="TimerEvent_2" targetRef="EndEvent_skipped" />
+    <bpmn:sequenceFlow id="Flow_15z2sad" sourceRef="ServiceTask_2" targetRef="EndEvent_completed" />
+    <bpmn:serviceTask id="ServiceTask_2" name="save entries">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="save-entries" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0aih9v1</bpmn:incoming>
+      <bpmn:outgoing>Flow_15z2sad</bpmn:outgoing>
     </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="FetchWaitingTimes">
-      <bpmndi:BPMNEdge id="Flow_0afobbp_di" bpmnElement="Flow_0afobbp">
-        <di:waypoint x="215" y="97" />
-        <di:waypoint x="270" y="97" />
+      <bpmndi:BPMNEdge id="Flow_0aih9v1_di" bpmnElement="Flow_0aih9v1">
+        <di:waypoint x="320" y="117" />
+        <di:waypoint x="380" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0cl76sk_di" bpmnElement="Flow_0cl76sk">
-        <di:waypoint x="370" y="97" />
-        <di:waypoint x="442" y="97" />
+      <bpmndi:BPMNEdge id="Flow_1pj5m77_di" bpmnElement="Flow_1pj5m77">
+        <di:waypoint x="188" y="117" />
+        <di:waypoint x="220" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Event_0k2l96q_di" bpmnElement="TimerEvent_1">
-        <dc:Bounds x="179" y="79" width="36" height="36" />
+      <bpmndi:BPMNEdge id="Flow_09t2knp_di" bpmnElement="Flow_09t2knp">
+        <di:waypoint x="260" y="175" />
+        <di:waypoint x="260" y="240" />
+        <di:waypoint x="372" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15z2sad_di" bpmnElement="Flow_15z2sad">
+        <di:waypoint x="480" y="117" />
+        <di:waypoint x="542" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_12g5xyo_di" bpmnElement="ServiceTask_1">
+        <dc:Bounds x="220" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0fhvlbg_di" bpmnElement="TimerEvent_1">
+        <dc:Bounds x="152" y="99" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="155" y="122" width="86" height="14" />
+          <dc:Bounds x="131" y="142" width="86" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_07meiso_di" bpmnElement="ServiceTask_1">
-        <dc:Bounds x="270" y="57" width="100" height="80" />
+      <bpmndi:BPMNShape id="Event_0dpdwmn_di" bpmnElement="EndEvent_skipped">
+        <dc:Bounds x="372" y="222" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="371" y="265" width="38" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_11ie4gm_di" bpmnElement="EndEvent_1">
-        <dc:Bounds x="442" y="79" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_0107tvb_di" bpmnElement="EndEvent_completed">
+        <dc:Bounds x="542" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="535" y="142" width="51" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0n567nk_di" bpmnElement="ServiceTask_2">
+        <dc:Bounds x="380" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_03xihf6_di" bpmnElement="TimerEvent_2">
+        <dc:Bounds x="242" y="139" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="273" y="203" width="74" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
