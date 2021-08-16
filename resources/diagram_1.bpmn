@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_17owuy2" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.9.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="1.0.0">
+  <bpmn:process id="FetchWaitingTimes" isExecutable="true">
+    <bpmn:startEvent id="TimerEvent_1" name="Every 15 minutes">
+      <bpmn:outgoing>Flow_0afobbp</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1a9pip3">
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">R/PT15M</bpmn:timeCycle>
+      </bpmn:timerEventDefinition>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0afobbp" sourceRef="TimerEvent_1" targetRef="ServiceTask_1" />
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:incoming>Flow_0cl76sk</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0cl76sk" sourceRef="ServiceTask_1" targetRef="EndEvent_1" />
+    <bpmn:serviceTask id="ServiceTask_1" name="fetch waiting times">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="fetch-waiting-times" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0afobbp</bpmn:incoming>
+      <bpmn:outgoing>Flow_0cl76sk</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="FetchWaitingTimes">
+      <bpmndi:BPMNEdge id="Flow_0afobbp_di" bpmnElement="Flow_0afobbp">
+        <di:waypoint x="215" y="97" />
+        <di:waypoint x="270" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0cl76sk_di" bpmnElement="Flow_0cl76sk">
+        <di:waypoint x="370" y="97" />
+        <di:waypoint x="442" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0k2l96q_di" bpmnElement="TimerEvent_1">
+        <dc:Bounds x="179" y="79" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="155" y="122" width="86" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_07meiso_di" bpmnElement="ServiceTask_1">
+        <dc:Bounds x="270" y="57" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_11ie4gm_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="442" y="79" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
