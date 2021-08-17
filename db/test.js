@@ -1,26 +1,14 @@
 const get = require('./index').get;
 const getDBStats = require('./index').getDBStats;
 
-function general(entries) {
-  console.log('#general');
-  console.log(entries.length, 'timestamp entries fetched.');
-  entries.length && console.log('From:', entries[0].timestamp, ', to:', entries[entries.length - 1].timestamp, '.');
-  console.log('Total size:', getDBStats().size, 'Bytes.');
-  console.log();
-}
-
-/**
- * Prints average waiting time of each coaster.
- * 
+/** 
  * {
  *   'Blue Fire': [{ value: 30, timestamp: ...}, { ... }],
  *   ...
  * }
  */
-function avgWaitingTimePerCoaster(entries) {
+function timesPerCoaster(entries) {
   const ridesMap = {};
-
-  console.log('#avgWaitingTimePerCoaster');
 
   entries.forEach(e => {
 
@@ -47,6 +35,20 @@ function avgWaitingTimePerCoaster(entries) {
     });
   });
 
+  return ridesMap;
+}
+
+function general(entries) {
+  console.log('#general');
+  console.log(entries.length, 'timestamp entries fetched.');
+  entries.length && console.log('From:', entries[0].timestamp, ', to:', entries[entries.length - 1].timestamp, '.');
+  console.log('Total size:', getDBStats().size, 'Bytes.');
+  console.log();
+}
+
+function avgWaitingTimePerCoaster(ridesMap) {
+  console.log('#avgWaitingTimePerCoaster');
+
   Object.keys(ridesMap).forEach(key => {
     const rides = ridesMap[key];
 
@@ -67,9 +69,10 @@ function avgWaitingTimePerCoaster(entries) {
 
 
 const entries = get();
+const ridesMap = timesPerCoaster(entries);
 
 general(entries);
-avgWaitingTimePerCoaster(entries);
+avgWaitingTimePerCoaster(ridesMap);
 
 
 
