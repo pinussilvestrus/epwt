@@ -59,7 +59,7 @@ function avgWaitingTimePerCoaster(entries) {
       sum += r.value;
     });
 
-    console.log(key, ':', sum / rides.length);
+    console.log(key, ':', Math.floor(sum / rides.length * 100) / 100);
   });
 
   console.log();
