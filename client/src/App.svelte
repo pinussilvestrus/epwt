@@ -7,7 +7,7 @@
 
 <main>
 	<div class="header">
-		<h1>epwt</h1>
+		<h1>epwt.</h1>
 		<h2>Roller coaster mining with Camunda Cloud</h2>
 	</div>
 	
@@ -27,7 +27,6 @@
 
 	h1 {
 		color: #ff3e00;
-		text-transform: uppercase;
 		font-size: 4em;
 		font-weight: 100;
 	}
