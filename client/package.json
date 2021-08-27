@@ -18,6 +18,8 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
+    "dateformat": "^4.5.1",
+    "min-dash": "^3.7.0",
     "sirv-cli": "^1.0.0"
   }
 }

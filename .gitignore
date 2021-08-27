@@ -2,3 +2,4 @@ node_modules
 rides.json
 .env
 themeparks.db
+.DS_Store

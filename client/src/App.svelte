@@ -2,8 +2,7 @@
 	import data from '../../db/rides.json';
 
 	import General from './components/General.svelte';
-
-	console.log(data);
+	import AvgPerCoaster from './components/AvgPerCoaster.svelte';
 </script>
 
 <main>
@@ -13,14 +12,14 @@
 	</div>
 	
 	<div class="content">
-		<p>Selected themepark: <span class="badge">Europa Park (Rust)</span></p>
 		<General entries={ data } />
+		<AvgPerCoaster entries={ data } />
 	</div>
 </main>
 
 <style>
 	main {
-		padding: 2em;
+		padding: 2em 6em;
 		max-width: 240px;
 		margin: 0 auto;
 		font-weight: 200;
@@ -38,23 +37,12 @@
 		font-size: 2em;
 	}
 
-	p {
-		font-weight: 200;
-		font-size: 20px;
-	}
-
 	.header {
 		text-align: center;
 	}
 
 	.content {
 		padding-top: 1em;
-	}
-
-	.badge {
-		background-color: #ffc775;
-		padding: 6px 12px;
-		border-radius: 20px;
 	}
 
 	@media (min-width: 640px) {

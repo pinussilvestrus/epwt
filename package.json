@@ -19,10 +19,6 @@
   "keywords": [],
   "author": "Niklas Kiefer <niklas.kiefer@camunda.com (https://github.com/pinussilvestrus)>",
   "license": "MIT",
-  "dependencies": {
-    "dateformat": "^4.5.1",
-    "dotenv": "^10.0.0"
-  },
   "devDependencies": {
     "@babel/core": "^7.15.0",
     "@rollup/plugin-json": "^4.1.0",
