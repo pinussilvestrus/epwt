@@ -19,7 +19,9 @@
   },
   "dependencies": {
     "dateformat": "^4.5.1",
+    "fusioncharts": "^3.17.0",
     "min-dash": "^3.7.0",
-    "sirv-cli": "^1.0.0"
+    "sirv-cli": "^1.0.0",
+    "svelte-fusioncharts": "^1.0.0"
   }
 }

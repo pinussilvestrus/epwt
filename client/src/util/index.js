@@ -1,7 +1,10 @@
 import dateformat from 'dateformat';
 
 import {
-  groupBy
+  find,
+  groupBy,
+  keys,
+  sortBy
 } from 'min-dash';
 
 /**
@@ -59,6 +62,24 @@ export function getAverageWaitingTime(rides) {
   });
 
   return floor(sum / rides.length);
+}
+
+export function getTimeSeriesData(coastersGroupedByTimeFrame, coasterKey) {
+  const rawData = find(coastersGroupedByTimeFrame, coaster => coaster.key === coasterKey);
+  const timeSeriesData = keys(rawData.times).map(key => {
+    const time = rawData.times[key];
+
+    // always assume the 01-01-1900 as prefix, needed to work with
+    // FusionCharts time format
+    // cf. https://www.fusioncharts.com/dev/fusiontime/getting-started/output-time-format
+    return [
+      '18-01-14-' + key,
+      time.average
+    ];
+  });
+
+  // sort time series by time frame (from 07:00-20:00)
+  return sortBy(timeSeriesData, t => t[0]);
 }
 
 
