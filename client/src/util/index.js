@@ -1,3 +1,9 @@
+import dateformat from 'dateformat';
+
+import {
+  groupBy
+} from 'min-dash';
+
 /**
  * {
  *   'Blue Fire': [{ value: 30, timestamp: ...}, { ... }],
@@ -36,6 +42,12 @@ export function timesPerCoaster(entries) {
   return ridesMap;
 }
 
+export function groupByTime(rides) {
+  return groupBy(rides, ride => {
+    return getReferenceTimeString(ride.timestamp);
+  });
+}
+
 export function getAverageWaitingTime(rides) {
   if (!rides.length) {
     return 0;
@@ -54,4 +66,31 @@ export function getAverageWaitingTime(rides) {
 
 function floor(number) {
   return Math.floor(number * 100) / 100;
+}
+
+/**
+ * Classifies a given date into a given time frame, e.g. 09:00 or 09:30.
+ *
+ * @param {Date} date
+ * @returns {String}
+ */
+function getReferenceTimeString(date) {
+  const fullTime = dateformat(date, 'isoTime');
+
+  const [
+    hours,
+    minutes
+  ] = fullTime.split(':');
+
+  let minutesFrame = '00';
+
+  if (minutes >= 15 && minutes < 30) {
+    minutesFrame = '15';
+  } else if (minutes >= 30 && minutes < 45) {
+    minutesFrame = '45';
+  } else if (minutes >= 45 && minutes < 59) {
+    minutesFrame = '45';
+  }
+
+  return hours + `:${minutesFrame}`;
 }

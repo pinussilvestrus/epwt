@@ -1,7 +1,26 @@
 <script>
-  import dateformat from 'dateformat';
+  import {
+    keys
+  } from 'min-dash';
+
+  import {
+    groupByTime,
+		timesPerCoaster
+	} from '../util';
 
   export let entries = [];
+
+  let coasters, coastersGroupedByTimeFrame;
+  $: {
+    coasters = timesPerCoaster(entries);
+    
+    coastersGroupedByTimeFrame = keys(coasters).map(key => {
+      const coaster = coasters[key];
+      return { key, times: groupByTime(coaster) };
+    });
+
+    console.log(coastersGroupedByTimeFrame);
+  }
 </script>
 
 <div class="avgPerCoaster">
