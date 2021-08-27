@@ -20,6 +20,14 @@ Make sure to configure your [Camunda Cloud](https://camunda.com/products/cloud/)
 npm run start:worker
 ```
 
+The workers will create a database file `db/rides.json`. This is required to make the `client` run.
+
+## Start client
+
+```sh
+npm run start:client
+```
+
 ## License
 
 MIT

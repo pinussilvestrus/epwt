@@ -9,7 +9,8 @@
     "test": "run-s lint",
     "start:worker": "lerna run --scope worker start --stream",
     "start:db": "lerna run --scope db test",
-    "start:lib": "lerna run --scope lib test --stream"
+    "start:lib": "lerna run --scope lib test --stream",
+    "start:client": "lerna run --scope client dev --stream"
   },
   "repository": {
     "type": "git",
@@ -19,10 +20,12 @@
   "author": "Niklas Kiefer <niklas.kiefer@camunda.com (https://github.com/pinussilvestrus)>",
   "license": "MIT",
   "dependencies": {
+    "dateformat": "^4.5.1",
     "dotenv": "^10.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
+    "@rollup/plugin-json": "^4.1.0",
     "babel-preset-env": "^1.7.0",
     "eslint": "^7.32.0",
     "eslint-plugin-bpmn-io": "^0.12.0",
