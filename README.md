@@ -1,5 +1,7 @@
 # epwt
 
+[![CI](https://github.com/pinussilvestrus/epwt/workflows/CI/badge.svg)](https://github.com/pinussilvestrus/epwt/actions?query=workflow%3ACI)
+
 Roller coaster mining with [Camunda Cloud](https://camunda.com/products/cloud/) - Example: Europa Park (Rust).
 
 ## Installation
