@@ -1,7 +1,7 @@
 const get = require('./index').get;
 const getDBStats = require('./index').getDBStats;
 
-/** 
+/**
  * {
  *   'Blue Fire': [{ value: 30, timestamp: ...}, { ... }],
  *   ...
@@ -61,7 +61,7 @@ function avgWaitingTimePerCoaster(ridesMap) {
       sum += r.value;
     });
 
-    console.log(key, ':', Math.floor(sum / rides.length * 100) / 100);
+    console.log(key, ':', floor(sum / rides.length));
   });
 
   console.log();
@@ -81,4 +81,8 @@ avgWaitingTimePerCoaster(ridesMap);
 // eslint-disable-next-line
  function printJSON(val) {
   console.log(JSON.stringify(val, null, 2));
+}
+
+function floor(number) {
+  return Math.floor(number * 100) / 100;
 }
