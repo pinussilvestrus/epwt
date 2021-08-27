@@ -2,16 +2,14 @@
   "name": "epwt",
   "version": "0.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
+    "all": "run-s test",
+    "postinstall": "lerna bootstrap --hoist",
     "lint": "eslint .",
     "test": "run-s lint",
-    "all": "run-s test",
-    "start:worker1": "node worker/fetchWaitingTimes.js",
-    "start:worker2": "node worker/saveEntries.js",
-    "start:worker": "run-p start:worker1 start:worker2",
-    "start:lib": "node lib/test.js",
-    "start:db": "node db/test.js"
+    "start:worker": "lerna run --scope worker start --stream",
+    "start:db": "lerna run --scope db test",
+    "start:lib": "lerna run --scope lib test --stream"
   },
   "repository": {
     "type": "git",
@@ -21,15 +19,14 @@
   "author": "Niklas Kiefer <niklas.kiefer@camunda.com (https://github.com/pinussilvestrus)>",
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^10.0.0",
-    "themeparks": "^5.1.49",
-    "zeebe-node": "^1.3.4"
+    "dotenv": "^10.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
     "babel-preset-env": "^1.7.0",
     "eslint": "^7.32.0",
     "eslint-plugin-bpmn-io": "^0.12.0",
+    "lerna": "^4.0.0",
     "npm-run-all": "^4.1.5"
   }
 }
