@@ -1,5 +1,5 @@
 node_modules
-rides.json
+rides*.json
 .env
 themeparks.db
 .DS_Store
